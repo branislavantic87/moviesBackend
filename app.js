@@ -25,4 +25,4 @@ app.get('*', (req, res) => {
     res.send('404 Page not found');
 });
 
-app.listen(8080, () => console.log('Server is running!'));
+app.listen(8000, () => console.log('Server is running!'));

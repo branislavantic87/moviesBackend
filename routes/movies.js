@@ -45,7 +45,7 @@ router.post('/movies', (req, res) => {
     if (!newMovie.poster) delete newMovie.poster;
     Movie.create(newMovie, (err, result) => {
         if (err) throw err;
-        res.json('Created movie');
+        res.redirect('/movies');
     });
 });
     /*
@@ -109,16 +109,22 @@ router.delete('/movies/:id', (req, res) => {
 });
 
 //Add actor(s) to the Movie
-router.get('/movies/:idm/:ida', (req, res) => {
+router.put('/movies/:idm/:ida', (req, res) => {
     Movie.findById(req.params.idm, (err, foundMovie) => {
         if (err) throw err;
         Actor.findById(req.params.ida, (err, foundActor) => {
             if (err) throw err;
-            foundMovie.actors.push(foundActor._id);
-            foundMovie.save();
-        });
+            if(foundMovie.actors.indexOf(foundActor._id) != -1){
+                res.send("POSTOJI");
+            }else {
+                foundMovie.actors.push(foundActor._id);
+                foundMovie.save();
+                res.redirect('/movies');
+                
+            }
+           
+        })
     });
-    res.redirect('/movies');
 });
 
 
