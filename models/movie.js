@@ -22,12 +22,15 @@ var MovieSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    actors: [
-        {
+    actors: [{
+        id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Actor'
+            ref: 'Actor',
+        },
+        zaradio: {
+            type: String
         }
-    ]
+    }]
 });
 
 module.exports = mongoose.model('Movie', MovieSchema);

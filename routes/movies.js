@@ -109,7 +109,7 @@ router.delete('/movies/:id', (req, res) => {
 });
 
 //Add actor(s) to the Movie
-router.put('/movies/:idm/:ida', (req, res) => {
+router.put('/movies/:idm/add/:ida', (req, res) => {
     Movie.findById(req.params.idm, (err, foundMovie) => {
         if (err) throw err;
         Actor.findById(req.params.ida, (err, foundActor) => {
@@ -117,7 +117,10 @@ router.put('/movies/:idm/:ida', (req, res) => {
             if(foundMovie.actors.indexOf(foundActor._id) != -1){
                 res.send("POSTOJI");
             }else {
-                foundMovie.actors.push(foundActor._id);
+                foundMovie.actors.push({
+                    id: foundActor._id,
+                    zaradio: req.body.zaradio
+                });
                 foundMovie.save();
                 res.redirect('/movies');
                 
